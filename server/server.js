@@ -3,6 +3,7 @@
     import dotenv from "dotenv";
     import connectDB from "./config/db.js";
     import authRoutes from "./routes/authRoutes.js";
+    import jobRoutes from "./routes/jobRoutes.js";
 
     dotenv.config();
 
@@ -15,6 +16,7 @@
     console.log("Registering /api/auth routes");
     //api route //
     app.use("/api/auth",authRoutes);
+    app.use("/api/jobs",jobRoutes);
     // test route /
     app.get('api/health',(req,res)=>{
         res.status(200).json({message: "server is running "})
