@@ -4,7 +4,7 @@
     import connectDB from "./config/db.js";
     import authRoutes from "./routes/authRoutes.js";
     import jobRoutes from "./routes/jobRoutes.js";
-
+    import applicationRoutes from "./routes/applicationRoutes.js";
     dotenv.config();
 
     const app = express();
@@ -17,6 +17,7 @@
     //api route //
     app.use("/api/auth",authRoutes);
     app.use("/api/jobs",jobRoutes);
+    app.use("/api/applications", applicationRoutes);
     // test route /
     app.get('api/health',(req,res)=>{
         res.status(200).json({message: "server is running "})
