@@ -25,6 +25,8 @@ const userSchema = new mongoose.Schema(
             type:String,
             enum:["seeker","recruiter"],
             default:"seeker",
+        },resume:{
+            type:String,
         }
     },
     {timestamps:true}

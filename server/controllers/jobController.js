@@ -33,7 +33,52 @@ export const createJob = async(req,res)=>{
 
 export const getAllJobs = async(req,res)=>{
     try {
-        const jobs = await Job.find().populate("postedBy","name email");
+          const {
+      keyword,
+      location,
+      jobType,
+      minSalary,
+      maxSalary,
+      experience,
+      page = 1,
+      limit = 10,
+      sort = "createdAt"
+    } = req.query;
+        let query={};
+        if(keyword){
+          query.$or=[
+            {title:{$regex:keyword,$options:"i"}},
+            {description:{$regex:keyword,$options:"i"}},
+            {company:{$regex:keyword,$options:"i"}},
+          ];
+        }
+        // location filter 
+        if(location){
+          query.location={$regex:location,$options:"i"};
+        }
+        // job filter
+        if(jobType){
+          query.jobType=jobType;
+        }
+        // experience filter
+        if(experience){
+          query.experience=experience;
+        }
+        // salary filter
+        if(minSalary||maxSalary){
+          query.salary={};
+          if(minSalary) query.salary.$gte=Number(minSalary);
+          if(maxSalary) query.salary.$lte= Number(maxSalary);
+        }
+        // pagination
+        const skip = (Number(page)-1)*Number(limit);
+        // console.log("Query Object => ",query);
+        // Db query 
+        const jobs = await Job.find(query)
+        .populate("postedBy","name email")
+        .sort({[sort]:-1})
+        .skip(skip)
+        .limit(Number(limit))
         res.status(200).json(jobs);
     } catch (error) {
         res.status(500).json({message:error.message});
