@@ -17,13 +17,22 @@ export const registerUser = async (req,res)=>{
             password,
             role,
         })
+
+        const token = generateToken(user._id);
+            res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false, // true in production (https)
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
         res.status(201).json({
+            success:true,
+            user:{
             _id:user._id,
             name:user.name,
             email:user.email,
             role:user.role,
-            token:generateToken(user._id),
-        });
+        }});
     } catch (error) {
         res.status(500).json({message:error.message});
     }

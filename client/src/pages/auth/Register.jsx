@@ -33,7 +33,7 @@ const Register = () => {
         navigate("/jobs");
       }
     } catch (err) {
-      setError(err);
+      setError(err?.response?.data?.message||"Registration failed !");
     } finally {
       setLoading(false);
     }
