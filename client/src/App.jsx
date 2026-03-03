@@ -1,19 +1,21 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
-
 import Navbar from "./components/Navbar";
-
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-
 import Jobs from "./pages/seeker/Jobs";
 import JobDetails from "./pages/seeker/JobDetails";
 import MyApplications from "./pages/seeker/MyApplications";
-
 import PostJob from "./pages/recruiter/PostJob";
 import MyJobs from "./pages/recruiter/MyJobs";
 import Applicants from "./pages/recruiter/Applicants";
+import { Toaster } from "react-hot-toast";
 
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
@@ -30,6 +32,16 @@ const ProtectedRoute = ({ children, role }) => {
 function App() {
   return (
     <Router>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#1f2937",
+            color: "#fff",
+          },
+        }}
+      />
       <Navbar />
 
       <Routes>
@@ -82,7 +94,7 @@ function App() {
           }
         />
         <Route
-          path="/recruiter/applicants/:id"
+          path="/recruiter/applicants/:jobId"
           element={
             <ProtectedRoute role="recruiter">
               <Applicants />
