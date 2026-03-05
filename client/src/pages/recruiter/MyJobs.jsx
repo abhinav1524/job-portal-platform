@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../../api/axios";
+import toast from "react-hot-toast";
 
 const MyJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -13,11 +14,11 @@ const MyJobs = () => {
     fetchJobs();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (jobId) => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
-
-    await api.delete(`/api/jobs/${id}`);
-    setJobs(jobs.filter((job) => job._id !== id));
+    await api.delete(`/api/jobs/${jobId}`);
+    toast.success("Job deleted successfully");
+    setJobs(jobs.filter((job) => job._id !== jobId));
   };
 
   return (

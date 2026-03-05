@@ -58,3 +58,13 @@ export const updateApplicationStatus = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// user see his application where he applied //
+export const getMyApplications = async (req, res) => {
+  const applications = await Application.find({
+    applicant: req.user._id
+  })
+  .populate("job", "title company location");
+
+  res.json(applications);
+};

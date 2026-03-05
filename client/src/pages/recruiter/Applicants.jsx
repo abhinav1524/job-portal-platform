@@ -47,6 +47,7 @@ const Applicants = () => {
   }
 
   return (
+    <div className="min-h-screen px-4 md:px-10 py-8 bg-gray-100 dark:bg-gray-900">
     <div className="max-w-6xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6 dark:text-white">Applicants</h1>
 
@@ -124,6 +125,7 @@ const Applicants = () => {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 };

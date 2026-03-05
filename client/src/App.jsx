@@ -16,6 +16,7 @@ import PostJob from "./pages/recruiter/PostJob";
 import MyJobs from "./pages/recruiter/MyJobs";
 import Applicants from "./pages/recruiter/Applicants";
 import { Toaster } from "react-hot-toast";
+import EditJob from "./pages/recruiter/EditJob";
 
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
@@ -90,6 +91,14 @@ function App() {
           element={
             <ProtectedRoute role="recruiter">
               <MyJobs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/recruiter/edit-job/:jobId"
+          element={
+            <ProtectedRoute role="recruiter">
+              <EditJob />
             </ProtectedRoute>
           }
         />
