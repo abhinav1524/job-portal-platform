@@ -17,7 +17,8 @@ import MyJobs from "./pages/recruiter/MyJobs";
 import Applicants from "./pages/recruiter/Applicants";
 import { Toaster } from "react-hot-toast";
 import EditJob from "./pages/recruiter/EditJob";
-
+import Profile from "./pages/seeker/profile/Profile";
+import EditProfile from "./pages/seeker/profile/EditProfile";
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
 
@@ -73,6 +74,22 @@ function App() {
           element={
             <ProtectedRoute role="seeker">
               <MyApplications />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute role="seeker">
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/edit"
+          element={
+            <ProtectedRoute role="seeker">
+              <EditProfile />
             </ProtectedRoute>
           }
         />
