@@ -30,6 +30,7 @@ const EditJob = () => {
           company: res.data.company || "",
           location: res.data.location || "",
           salary: res.data.salary || "",
+          experience: res.data.experience || "",
           description: res.data.description || "",
         });
 
@@ -107,6 +108,16 @@ const EditJob = () => {
           name="location"
           placeholder="Location"
           value={formData.location}
+          onChange={handleChange}
+          required
+          className="w-full p-3 border rounded-lg dark:text-white"
+        />
+
+        <input
+          type="text"
+          name="experience"
+          placeholder="Experience"
+          value={formData.experience}
           onChange={handleChange}
           required
           className="w-full p-3 border rounded-lg dark:text-white"

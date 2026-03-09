@@ -11,6 +11,7 @@ const PostJob = () => {
     company: "",
     description: "",
     location: "",
+    experience: "",
     salary: "",
   });
 
@@ -64,6 +65,16 @@ const PostJob = () => {
           name="location"
           placeholder="Location"
           value={formData.location}
+          onChange={handleChange}
+          required
+          className="w-full p-3 border rounded-lg dark:text-white"
+        />
+
+        <input
+          type="text"
+          name="experience"
+          placeholder="Experience"
+          value={formData.experience}
           onChange={handleChange}
           required
           className="w-full p-3 border rounded-lg dark:text-white"

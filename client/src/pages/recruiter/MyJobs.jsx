@@ -8,7 +8,7 @@ const MyJobs = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const res = await api.get("/api/jobs/");
+      const res = await api.get("/api/jobs/my-jobs/");
       setJobs(res.data);
     };
     fetchJobs();

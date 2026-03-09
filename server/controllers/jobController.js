@@ -142,3 +142,19 @@ export const deleteJob = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// getting the jobs for a specific recruiter //
+
+export const getMyJobs = async (req, res) => {
+  try {
+
+    const jobs = await Job.find({ postedBy: req.user.id })
+      .populate("postedBy", "name email")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(jobs);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
