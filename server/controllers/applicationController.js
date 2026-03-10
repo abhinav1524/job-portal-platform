@@ -1,6 +1,6 @@
 import Application from "../models/Application.js";
 import Job from "../models/Job.js";
-
+import User from "../models/User.js";
 export const applyJob = async(req,res)=>{
     try {
         const jobId= req.params.id;
@@ -8,6 +8,11 @@ export const applyJob = async(req,res)=>{
         if(!job){
             return res.status(404).json({message:"job not found"})
         }
+        const user = await User.findById(req.user._id);
+            if (!user.resume) {
+      return res.status(400).json({ message: "Please upload resume first" });
+    }
+
         const alreadyApplied = await Application.findOne({
             job:jobId,
             applicant:req.user._id,
@@ -17,9 +22,10 @@ export const applyJob = async(req,res)=>{
         }
         const application = await Application.create({
             job:jobId,
-            applicant:req.user._id
+            applicant:req.user._id,
+            resume:user.resume
         })
-        res.status(201).json(application);
+        res.status(201).json({message:"Application Submitted",application});
     } catch (error) {
         res.status(500).json({message:error.message})
     }

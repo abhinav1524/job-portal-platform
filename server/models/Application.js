@@ -11,6 +11,10 @@ const applicationSchema = new mongoose.Schema({
         ref:"User",
         required:true
     },
+    resume:{
+    type:String,
+    required:true
+  },
     status:{
         type:String,
         ref:"User",

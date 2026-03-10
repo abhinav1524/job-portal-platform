@@ -67,6 +67,14 @@ const Applicants = () => {
               <p className="text-gray-600 dark:text-gray-400">
                 {app.applicant.email}
               </p>
+              <a
+  href={app.resume}
+  target="_blank"
+  rel="noreferrer"
+  className="text-blue-600 hover:underline"
+>
+  View Resume
+</a>
 
               <p className="mt-2 text-sm dark:text-white">
                 Status:{" "}
