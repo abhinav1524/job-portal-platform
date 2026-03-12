@@ -14,7 +14,6 @@ const Applicants = () => {
     const fetchApplicants = async () => {
       try {
         const res = await api.get(`/api/applications/job/${jobId}`);
-        console.log(res.data)
         setApplications(res.data);
       } catch (error) {
         console.log(error);
