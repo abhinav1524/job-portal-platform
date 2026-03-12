@@ -5,11 +5,18 @@ import toast from "react-hot-toast";
 
 const MyJobs = () => {
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const res = await api.get("/api/jobs/my-jobs/");
-      setJobs(res.data);
+      try {
+        const res = await api.get("/api/jobs/my-jobs/");
+        setJobs(res.data);
+      } catch (error) {
+        toast.error("Failed to fetch jobs");
+      } finally {
+        setLoading(false);
+      }
     };
     fetchJobs();
   }, []);
@@ -28,44 +35,65 @@ const MyJobs = () => {
       </h2>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {jobs.map((job) => (
-          <div
-            key={job._id}
-            className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-5 flex flex-col justify-between"
-          >
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {job.title}
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
-                {job.company}
-              </p>
+
+        {/* Skeleton Loader */}
+        {loading &&
+          Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-5 animate-pulse"
+            >
+              <div className="h-5 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-3"></div>
+              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mb-6"></div>
+
+              <div className="flex gap-2">
+                <div className="h-7 w-16 bg-gray-300 dark:bg-gray-700 rounded"></div>
+                <div className="h-7 w-16 bg-gray-300 dark:bg-gray-700 rounded"></div>
+                <div className="h-7 w-20 bg-gray-300 dark:bg-gray-700 rounded"></div>
+              </div>
             </div>
+          ))}
 
-            <div className="flex gap-2 mt-4 flex-wrap">
-              <Link
-                to={`/recruiter/edit-job/${job._id}`}
-                className="px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded"
-              >
-                Edit
-              </Link>
+        {/* Jobs */}
+        {!loading &&
+          jobs.map((job) => (
+            <div
+              key={job._id}
+              className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-5 flex flex-col justify-between"
+            >
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {job.title}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                  {job.company}
+                </p>
+              </div>
 
-              <button
-                onClick={() => handleDelete(job._id)}
-                className="px-3 py-1 text-sm bg-red-600 hover:bg-red-700 text-white rounded"
-              >
-                Delete
-              </button>
+              <div className="flex gap-2 mt-4 flex-wrap">
+                <Link
+                  to={`/recruiter/edit-job/${job._id}`}
+                  className="px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded"
+                >
+                  Edit
+                </Link>
 
-              <Link
-                to={`/recruiter/applicants/${job._id}`}
-                className="px-3 py-1 text-sm bg-green-600 hover:bg-green-700 text-white rounded"
-              >
-                Applicants
-              </Link>
+                <button
+                  onClick={() => handleDelete(job._id)}
+                  className="px-3 py-1 text-sm bg-red-600 hover:bg-red-700 text-white rounded"
+                >
+                  Delete
+                </button>
+
+                <Link
+                  to={`/recruiter/applicants/${job._id}`}
+                  className="px-3 py-1 text-sm bg-green-600 hover:bg-green-700 text-white rounded"
+                >
+                  Applicants
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
