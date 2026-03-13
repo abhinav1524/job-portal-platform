@@ -1,5 +1,7 @@
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
+import crypto from "crypto";
+import sendEmail from "../utils/sendEmails.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -100,5 +102,76 @@ export const logoutUser = (req, res) => {
   res.status(200).json({
     success: true,
     message: "Logged out successfully",
+  });
+};
+
+export const forgotPassword = async (req, res) => {
+
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found"
+    });
+  }
+
+  // generate token
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  user.resetPasswordToken = resetToken;
+  user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+  await user.save();
+
+  const resetUrl =
+    `http://localhost:5173/reset-password/${resetToken}`;
+
+  const message = `
+You requested a password reset.
+
+Click the link below to reset your password:
+
+${resetUrl}
+
+If you did not request this, ignore this email.
+`;
+
+  await sendEmail({
+    email: user.email,
+    subject: "Password Reset",
+    message
+  });
+
+  res.json({
+    message: "Reset link sent to email"
+  });
+};
+
+export const resetPassword = async (req, res) => {
+
+  const { token } = req.params;
+
+  const user = await User.findOne({
+    resetPasswordToken: token,
+    resetPasswordExpire: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    return res.status(400).json({
+      message: "Token invalid or expired"
+    });
+  }
+
+  user.password = req.body.password;
+
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  res.json({
+    message: "Password reset successful"
   });
 };

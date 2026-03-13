@@ -19,6 +19,8 @@ import { Toaster } from "react-hot-toast";
 import EditJob from "./pages/recruiter/EditJob";
 import Profile from "./pages/seeker/profile/Profile";
 import EditProfile from "./pages/seeker/profile/EditProfile";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
 
@@ -51,6 +53,8 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* Job Seeker Routes */}
         <Route
