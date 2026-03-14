@@ -19,9 +19,9 @@ const Home = () => {
           Apply easily and grow your career today.
         </p>
 
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg">
+        <a href="/jobs" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg">
           Browse Jobs
-        </button>
+        </a>
 
       </section>
 
