@@ -7,30 +7,6 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white transition">
 
-      {/* Navbar */}
-      <nav className="flex justify-between items-center px-6 py-4 shadow-md dark:shadow-gray-800">
-
-        <h1 className="text-2xl font-bold text-blue-600">
-          JobPortal
-        </h1>
-
-        <div className="flex gap-4 items-center">
-
-          <button
-            onClick={toggleTheme}
-            className="px-3 py-1 border rounded-lg dark:border-gray-600"
-          >
-            {theme === "dark" ? "Light" : "Dark"}
-          </button>
-
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-            Login
-          </button>
-
-        </div>
-
-      </nav>
-
       {/* Hero Section */}
       <section className="flex flex-col items-center text-center py-20 px-6">
 
