@@ -1,5 +1,5 @@
 import { useTheme } from "../context/ThemeContext";
-
+import { Link } from "react-router-dom";
 const Home = () => {
 
   const { theme, toggleTheme } = useTheme();
@@ -19,9 +19,9 @@ const Home = () => {
           Apply easily and grow your career today.
         </p>
 
-        <a href="/jobs" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg">
+        <Link to="/jobs" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg">
           Browse Jobs
-        </a>
+        </Link>
 
       </section>
 
