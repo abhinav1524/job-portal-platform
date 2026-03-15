@@ -63,6 +63,7 @@ export const loginUser = async (req, res) => {
     });
     res.status(200).json({
       success: true,
+      token,
       user: {
         _id: user._id,
         name: user.name,

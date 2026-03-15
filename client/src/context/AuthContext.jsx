@@ -8,6 +8,11 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+  if (!token) {
+    setLoading(false);
+    return; // ← skip /me call if no token
+  }
     try {
       const res = await api.get("/api/auth/me");
       setUser(res.data.user);
@@ -24,6 +29,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     const res = await api.post("/api/auth/login", data);
+      if (res.data.token) {
+    localStorage.setItem("token", res.data.token); // ← save token
+  }
     setUser(res.data.user);
     return res.data;
   };
@@ -38,6 +46,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await api.post("/api/auth/logout");
     } catch (err) {}
+    localStorage.removeItem("token");
     setUser(null);
   };
 
