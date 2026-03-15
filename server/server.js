@@ -13,7 +13,10 @@
     
     // middleware 
     app.use(cors({
-        origin:"job-portal-platform-mu.vercel.app",
+        origin: [
+        "http://localhost:5173",
+        "https://job-portal-platform-mu.vercel.app"
+    ],
         credentials:true
     }));
     app.use(express.json());
