@@ -58,8 +58,8 @@ export const loginUser = async (req, res) => {
     const token = generateToken(user._id);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production", // ✅ true in prod, false in dev
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ✅ "none" required for cross-site cookies
     });
     res.status(200).json({
       success: true,
@@ -95,8 +95,8 @@ export const logoutUser = (req, res) => {
   res.cookie("token", "", {
     httpOnly: true,
     expires: new Date(0),
-    sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ✅ add this
   });
 
   res.status(200).json({
@@ -106,14 +106,13 @@ export const logoutUser = (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
-
   const { email } = req.body;
 
   const user = await User.findOne({ email });
 
   if (!user) {
     return res.status(404).json({
-      message: "User not found"
+      message: "User not found",
     });
   }
 
@@ -125,8 +124,7 @@ export const forgotPassword = async (req, res) => {
 
   await user.save();
 
-  const resetUrl =
-    `http://localhost:5173/reset-password/${resetToken}`;
+  const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
 
   const message = `
 You requested a password reset.
@@ -141,26 +139,25 @@ If you did not request this, ignore this email.
   await sendEmail({
     email: user.email,
     subject: "Password Reset",
-    message
+    message,
   });
 
   res.json({
-    message: "Reset link sent to email"
+    message: "Reset link sent to email",
   });
 };
 
 export const resetPassword = async (req, res) => {
-
   const { token } = req.params;
 
   const user = await User.findOne({
     resetPasswordToken: token,
-    resetPasswordExpire: { $gt: Date.now() }
+    resetPasswordExpire: { $gt: Date.now() },
   });
 
   if (!user) {
     return res.status(400).json({
-      message: "Token invalid or expired"
+      message: "Token invalid or expired",
     });
   }
 
@@ -172,6 +169,6 @@ export const resetPassword = async (req, res) => {
   await user.save();
 
   res.json({
-    message: "Password reset successful"
+    message: "Password reset successful",
   });
 };
