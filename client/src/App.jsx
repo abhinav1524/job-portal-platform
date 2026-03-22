@@ -21,6 +21,7 @@ import Profile from "./pages/seeker/profile/Profile";
 import EditProfile from "./pages/seeker/profile/EditProfile";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import PageNotFound from "./pages/PageNotFound";
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
 
@@ -55,6 +56,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="*" element={<PageNotFound />} />
 
         {/* Job Seeker Routes */}
         <Route
