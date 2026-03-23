@@ -20,13 +20,63 @@ export default function Profile() {
     }
   };
 
-  if (!user) {
-    return (
-      <div className="text-center mt-20 text-gray-700 dark:text-gray-300">
-        Loading...
+if (!user) {
+  return (
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex justify-center items-start pt-16 px-4 animate-pulse">
+      
+      <div className="w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+
+        {/* Title */}
+        <div className="h-6 bg-gray-400 dark:bg-gray-600 rounded w-1/3 mb-6"></div>
+
+        <div className="space-y-4">
+
+          {/* Name */}
+          <div>
+            <div className="h-3 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+            <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/2"></div>
+          </div>
+
+          {/* Email */}
+          <div>
+            <div className="h-3 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+            <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-2/3"></div>
+          </div>
+
+          {/* Bio */}
+          <div>
+            <div className="h-3 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+            <div className="space-y-2">
+              <div className="h-3 bg-gray-400 dark:bg-gray-600 rounded"></div>
+              <div className="h-3 bg-gray-400 dark:bg-gray-600 rounded w-5/6"></div>
+            </div>
+          </div>
+
+          {/* Skills */}
+          <div>
+            <div className="h-3 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+            <div className="flex gap-2">
+              <div className="h-6 w-16 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+              <div className="h-6 w-20 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+              <div className="h-6 w-14 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+            </div>
+          </div>
+
+          {/* Resume */}
+          <div>
+            <div className="h-3 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+            <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/3"></div>
+          </div>
+
+        </div>
+
+        {/* Button */}
+        <div className="mt-6 h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex justify-center items-start pt-16 px-4">

@@ -97,9 +97,57 @@ const handleSubmit = async (e) => {
   }
 };
 
-  if(!user){
-    return <div className="text-center mt-20">Loading...</div>
-  }
+if (!user) {
+  return (
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex justify-center p-6 animate-pulse">
+
+      <div className="w-full max-w-3xl bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+
+        {/* Title */}
+        <div className="h-7 bg-gray-400 dark:bg-gray-600 rounded w-1/3 mb-6"></div>
+
+        {/* Email */}
+        <div className="mb-8">
+          <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+          <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/2"></div>
+        </div>
+
+        {/* Form */}
+        <div className="space-y-5">
+
+          {/* Name */}
+          <div>
+            <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+            <div className="h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+          </div>
+
+          {/* Bio */}
+          <div>
+            <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+            <div className="h-20 bg-gray-400 dark:bg-gray-600 rounded"></div>
+          </div>
+
+          {/* Skills */}
+          <div>
+            <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/3 mb-2"></div>
+            <div className="h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+          </div>
+
+          {/* Resume */}
+          <div>
+            <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+            <div className="h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+          </div>
+
+          {/* Button */}
+          <div className="h-12 bg-gray-400 dark:bg-gray-600 rounded mt-4"></div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex justify-center p-6">

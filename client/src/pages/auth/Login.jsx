@@ -24,6 +24,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     try {
       const res = await login(form);
@@ -89,7 +90,13 @@ dark:border-gray-600"
 
           <button
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg transition"
+            className={`w-full py-3 rounded-lg transition font-medium
+    ${
+      loading
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-indigo-600 hover:bg-indigo-700 text-white"
+    }`}
+
           >
             {loading ? "Logging in..." : "Login"}
           </button>

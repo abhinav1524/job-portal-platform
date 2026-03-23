@@ -11,6 +11,7 @@ const JobDetails = () => {
   const [job, setJob] = useState(null);
   const [applied, setApplied] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [applyLoading, setApplyLoading] = useState(false);
 
   const fetchJob = async () => {
     try {
@@ -25,12 +26,16 @@ const JobDetails = () => {
   };
 
   const applyJob = async () => {
+    if (applyLoading) return;
     try {
+      setApplyLoading(true);
       await api.post(`/api/applications/${id}/apply`);
       setApplied(true);
       toast.success("Application submitted successfully");
     } catch (err) {
       toast.error(err.response?.data?.message || "Already applied");
+    }finally{
+      setApplyLoading(false);
     }
   };
 
@@ -39,12 +44,46 @@ const JobDetails = () => {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="text-center mt-20 text-lg dark:text-white">
-        Loading job details...
+  return (
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-4 md:px-10 py-10 animate-pulse">
+      
+      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+
+        {/* Title */}
+        <div className="h-8 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+
+        {/* Company */}
+        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
+
+        {/* Location */}
+        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/4 mb-2"></div>
+
+        {/* Salary */}
+        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/5 mb-2"></div>
+
+        {/* Date */}
+        <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-6"></div>
+
+        <hr className="my-6 border-gray-200 dark:border-gray-700" />
+
+        {/* Description heading */}
+        <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-1/4 mb-3"></div>
+
+        {/* Description lines */}
+        <div className="space-y-3 mb-8">
+          <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded"></div>
+          <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded"></div>
+          <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-5/6"></div>
+          <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-2/3"></div>
+        </div>
+
+        {/* Button */}
+        <div className="h-12 bg-gray-300 dark:bg-gray-700 rounded w-full md:w-40"></div>
+
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   if (!job) {
     return (
@@ -105,15 +144,19 @@ const JobDetails = () => {
         {/* Apply Button */}
         <button
           onClick={applyJob}
-          disabled={applied}
+          disabled={applied || applyLoading}
           className={`w-full md:w-auto px-6 py-3 rounded-lg text-white transition
           ${
-            applied
+            applied || applyLoading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-indigo-600 hover:bg-indigo-700"
-          }`}
+          } cursor-pointer`}
         >
-          {applied ? "Already Applied" : "Apply Now"}
+            {applyLoading
+    ? "Applying..."
+    : applied
+    ? "Already Applied"
+    : "Apply Now"}
         </button>
       </div>
     </div>

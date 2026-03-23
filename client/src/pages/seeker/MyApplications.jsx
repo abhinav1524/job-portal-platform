@@ -33,13 +33,43 @@ const MyApplications = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="text-center mt-20 text-gray-600 dark:text-gray-300">
-        Loading applications...
+if (loading) {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-4 animate-pulse">
+      <div className="max-w-5xl mx-auto">
+
+        {/* Heading */}
+        <div className="h-8 bg-gray-400 dark:bg-gray-600 rounded w-1/3 mb-8"></div>
+
+        {/* Skeleton cards */}
+        <div className="grid gap-6">
+          {[1, 2, 3].map((item) => (
+            <div
+              key={item}
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow"
+            >
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+
+                {/* Left side */}
+                <div className="flex-1">
+                  <div className="h-5 bg-gray-400 dark:bg-gray-600 rounded w-2/3 mb-2"></div>
+                  <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/3 mb-2"></div>
+                  <div className="h-3 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-2"></div>
+                  <div className="h-3 bg-gray-400 dark:bg-gray-600 rounded w-1/5"></div>
+                </div>
+
+                {/* Status badge */}
+                <div className="h-8 w-24 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-4">
