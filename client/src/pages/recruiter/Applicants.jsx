@@ -41,9 +41,47 @@ const Applicants = () => {
       toast.error("Failed to update status");
     }
   };
-  if (loading) {
-    return <div className="text-center mt-10">Loading...</div>;
-  }
+if (loading) {
+  return (
+    <div className="min-h-screen px-4 md:px-10 py-8 bg-gray-100 dark:bg-gray-900 animate-pulse">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+
+        {/* Heading */}
+        <div className="h-7 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-6"></div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+
+          {Array(4).fill(0).map((_, i) => (
+            <div
+              key={i}
+              className="p-5 bg-white dark:bg-gray-800 rounded-xl shadow-md"
+            >
+              {/* Name */}
+              <div className="h-5 bg-gray-400 dark:bg-gray-600 rounded w-1/2 mb-2"></div>
+
+              {/* Email */}
+              <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-2/3 mb-2"></div>
+
+              {/* Resume link */}
+              <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/3 mb-3"></div>
+
+              {/* Status */}
+              <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-1/4 mb-4"></div>
+
+              {/* Buttons */}
+              <div className="flex gap-3">
+                <div className="h-9 w-24 bg-gray-400 dark:bg-gray-600 rounded-xl"></div>
+                <div className="h-9 w-20 bg-gray-400 dark:bg-gray-600 rounded-xl"></div>
+                <div className="h-9 w-20 bg-gray-400 dark:bg-gray-600 rounded-xl"></div>
+              </div>
+            </div>
+          ))}
+
+        </div>
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen px-4 md:px-10 py-8 bg-gray-100 dark:bg-gray-900">

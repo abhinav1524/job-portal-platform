@@ -52,9 +52,57 @@ const EditJob = () => {
     });
   };
 
+    const validate = () => {
+    
+      if(!formData.title&& !formData.company&& !formData.description&&formData.location&&formData.experience&&formData.salary){
+        toast.dismiss();
+        toast.error("All the fields are required !");
+        return false;
+      }
+      
+      if (!formData.title) {
+        toast.dismiss();
+        toast.error("Title is required");
+        return false;
+      }
+    
+      if (!formData.company) {
+        toast.dismiss();
+        toast.error("Company Name is required");
+        return false;
+      }
+    
+      if (!formData.description) {
+        toast.dismiss();
+        toast.error("Description is required");
+        return false;
+      }
+    
+      if (!formData.location) {
+        toast.dismiss();
+        toast.error("Location is required");
+        return false;
+      }
+        
+      if (!formData.experience) {
+        toast.dismiss();
+        toast.error("Experience is required");
+        return false;
+      }
+        
+      if (!formData.salary) {
+        toast.dismiss();
+        toast.error("Salary is required");
+        return false;
+      }
+    
+      return true; // all good
+    };
+
   // Handle update
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
     setUpdating(true);
 
     try {
@@ -68,13 +116,35 @@ const EditJob = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader2 className="animate-spin" size={40} />
+if (loading) {
+  return (
+    <div className="min-h-screen px-4 md:px-10 py-8 bg-gray-100 dark:bg-gray-900 animate-pulse">
+      <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
+
+        {/* Title */}
+        <div className="h-8 bg-gray-400 dark:bg-gray-600 rounded w-1/3 mb-6"></div>
+
+        <div className="space-y-5">
+
+          {/* Inputs */}
+          <div className="h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+          <div className="h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+          <div className="h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+          <div className="h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+          <div className="h-10 bg-gray-400 dark:bg-gray-600 rounded"></div>
+
+          {/* Textarea */}
+          <div className="h-24 bg-gray-400 dark:bg-gray-600 rounded"></div>
+
+          {/* Button */}
+          <div className="h-12 bg-gray-400 dark:bg-gray-600 rounded"></div>
+
+        </div>
+
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen px-4 md:px-10 py-8 bg-gray-100 dark:bg-gray-900">
@@ -89,7 +159,6 @@ const EditJob = () => {
           placeholder="Job Title"
           value={formData.title}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -99,7 +168,6 @@ const EditJob = () => {
           placeholder="Company Name"
           value={formData.company}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -109,7 +177,6 @@ const EditJob = () => {
           placeholder="Location"
           value={formData.location}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -119,7 +186,6 @@ const EditJob = () => {
           placeholder="Experience"
           value={formData.experience}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -129,7 +195,6 @@ const EditJob = () => {
           placeholder="Salary"
           value={formData.salary}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -138,7 +203,6 @@ const EditJob = () => {
           placeholder="Job Description"
           value={formData.description}
           onChange={handleChange}
-          required
           rows={5}
           className="w-full p-3 border rounded-lg dark:text-white"
         />

@@ -14,7 +14,7 @@ const PostJob = () => {
     experience: "",
     salary: "",
   });
-
+  const [loading ,setLoading]= useState(false);
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -22,15 +22,66 @@ const PostJob = () => {
     });
   };
 
+  const validate = () => {
+  
+    if(!formData.title&& !formData.company&& !formData.description&&!formData.location&&!formData.experience&&!formData.salary){
+      toast.dismiss();
+      toast.error("All the fields are required !");
+      return false;
+    }
+    
+    if (!formData.title) {
+      toast.dismiss();
+      toast.error("Title is required");
+      return false;
+    }
+  
+    if (!formData.company) {
+      toast.dismiss();
+      toast.error("Company Name is required");
+      return false;
+    }
+  
+    if (!formData.description) {
+      toast.dismiss();
+      toast.error("Description is required");
+      return false;
+    }
+  
+    if (!formData.location) {
+      toast.dismiss();
+      toast.error("Location is required");
+      return false;
+    }
+      
+    if (!formData.experience) {
+      toast.dismiss();
+      toast.error("Experience is required");
+      return false;
+    }
+      
+    if (!formData.salary) {
+      toast.dismiss();
+      toast.error("Salary is required");
+      return false;
+    }
+  
+    return true; // all good
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (!validate()) return;
+    if (loading) return;
+    setLoading(true);
     try {
       await api.post("/api/jobs", formData);
       toast.success("Job created successfully");
       navigate("/recruiter/my-jobs");
     } catch (error) {
       toast.error("Failed to create job");
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -46,7 +97,6 @@ const PostJob = () => {
           placeholder="Job Title"
           value={formData.title}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -56,7 +106,6 @@ const PostJob = () => {
           placeholder="Company Name"
           value={formData.company}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -66,7 +115,6 @@ const PostJob = () => {
           placeholder="Location"
           value={formData.location}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -76,7 +124,6 @@ const PostJob = () => {
           placeholder="Experience"
           value={formData.experience}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -86,7 +133,6 @@ const PostJob = () => {
           placeholder="Salary"
           value={formData.salary}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
@@ -95,15 +141,19 @@ const PostJob = () => {
           placeholder="Job Description"
           value={formData.description}
           onChange={handleChange}
-          required
           className="w-full p-3 border rounded-lg dark:text-white"
         />
 
         <button
           type="submit"
-          className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition cursor-pointer"
+          className={`w-full p-3 rounded-lg transition
+    ${
+      loading
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-green-600 hover:bg-green-700 text-white"
+    } cursor-pointer`}
         >
-          Post Job
+          {loading ? "Posting..." : "Post Job"}
         </button>
       </form>
     </div>

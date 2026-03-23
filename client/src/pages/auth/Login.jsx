@@ -22,8 +22,37 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const validate = () => {
+  if (!form.email) {
+    toast.dismiss();
+    toast.error("Email is required");
+    return false;
+  }
+
+  if (!/\S+@\S+\.\S+/.test(form.email)) {
+    toast.dismiss();
+    toast.error("Enter a valid email");
+    return false;
+  }
+
+  if (!form.password) {
+    toast.dismiss();
+    toast.error("Password is required");
+    return false;
+  }
+
+  if (form.password.length < 6) {
+    toast.dismiss();
+    toast.error("Password must be at least 6 characters");
+    return false;
+  }
+
+  return true; // ✅ all good
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
     if (loading) return;
     setLoading(true);
     try {
@@ -60,7 +89,6 @@ p-8 rounded-2xl shadow-xl w-full max-w-md"
             placeholder="Email address"
             value={form.email}
             onChange={handleChange}
-            required
             className="w-full p-3 border rounded-lg bg-transparent 
 focus:outline-none focus:ring-2 focus:ring-indigo-400 
 dark:border-gray-600"
@@ -73,7 +101,6 @@ dark:border-gray-600"
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
-              required
               className="w-full p-3 pr-10 border rounded-lg bg-transparent 
     focus:outline-none focus:ring-2 focus:ring-indigo-400 
     dark:border-gray-600"

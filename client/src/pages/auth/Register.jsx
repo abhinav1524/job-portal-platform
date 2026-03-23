@@ -14,8 +14,6 @@ const Register = () => {
     password: "",
     role: "seeker",
   });
-
-  // const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   // show and hide the password
   const [showPassword, setShowPassword] = useState(false);
@@ -23,8 +21,50 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+const validate = () => {
+
+  if(!form.name&& !form.email&& !form.password){
+    toast.dismiss();
+    toast.error("All the fields are required !");
+    return false;
+  }
+  
+  if (!form.name) {
+    toast.dismiss();
+    toast.error("Name is required");
+    return false;
+  }
+
+  if (!form.email) {
+    toast.dismiss();
+    toast.error("Email is required");
+    return false;
+  }
+
+  if (!/\S+@\S+\.\S+/.test(form.email)) {
+    toast.dismiss();
+    toast.error("Enter a valid email");
+    return false;
+  }
+
+  if (!form.password) {
+    toast.dismiss();
+    toast.error("Password is required");
+    return false;
+  }
+
+  if (form.password.length < 6) {
+    toast.dismiss();
+    toast.error("Password must be at least 6 characters");
+    return false;
+  }
+
+  return true; // all good
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return; // checking the validation
     setLoading(true);
 
     try {
@@ -58,7 +98,6 @@ dark:from-gray-900 dark:to-gray-800"
             placeholder="Full Name"
             value={form.name}
             onChange={handleChange}
-            required
             className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:border-gray-600 bg-transparent"
           />
 
@@ -68,7 +107,6 @@ dark:from-gray-900 dark:to-gray-800"
             placeholder="Email Address"
             value={form.email}
             onChange={handleChange}
-            required
             className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:border-gray-600 bg-transparent"
           />
 
@@ -79,7 +117,6 @@ dark:from-gray-900 dark:to-gray-800"
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
-              required
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:border-gray-600 bg-transparent"
             />
             <button
